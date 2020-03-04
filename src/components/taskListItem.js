@@ -1,13 +1,17 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
 
 const TaskListItem = (props) => {
 
      const task = props.task;
-  
+     const history = useHistory();
 
+     const loadTask = () => {
+          history.push("/Task/" + task.TaskId)
+     }
      return (
-          <li className="list-group-item list-group-item-action task-list-item">
+          <li className="list-group-item list-group-item-action task-list-item" onClick={loadTask}> 
           
                     <div className='task-list-column'>
                          <span>{task.TaskId}</span>

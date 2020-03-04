@@ -1,22 +1,21 @@
 import React from 'react';
-
-
-const Task = (props) => {
-
-     const task = props.task;
-  
-
+import taskService from '../service/taskService'
+import {withRouter} from 'react-router'
+const Task = ({match}) => {
+    // console.log(match)
+     const TaskId = match.params.TaskId
+     const task = taskService.getTask(TaskId)
+   //  console.log(task)
      return (
-          <div className="">
-               <div className=''>
-                    <span>{task.id}</span>
+          <div className="card">
+               <div className="card-header">
+                    <span>{task.Title}</span>
                </div>
+               <div class='card-body'>
                <div >
                     <span>{task.AssignedTo}</span>
                </div>
-               <div >
-                    <span>{task.Title}</span>
-               </div>
+            
                <div >
                     <span>{task.Notes}</span>
                </div>
@@ -38,6 +37,8 @@ const Task = (props) => {
                <div >
                     <span>{task.Location}</span>
                </div>
+               </div>
+              
            
 
           </div>
@@ -46,4 +47,4 @@ const Task = (props) => {
 
 }
 
-export default Task;
+export default withRouter(Task);

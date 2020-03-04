@@ -277,7 +277,12 @@ const tasksService =  {
      
      getTasks:() => {
           return testtasklist;
-     }
+     },
+     getTask:(TaskId) =>{
+          let Filtered = testtasklist.filter(X=>X.TaskId == TaskId)
+          //console.log(Filtered)
+          return Filtered.length>0?Filtered[0]:null
+     } 
         
 }
 
