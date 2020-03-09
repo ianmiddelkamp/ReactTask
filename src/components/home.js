@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TaskListItem from './taskListItem'
-import { render } from '@testing-library/react';
+
 
 import taskService from '../service/taskService'
 class Home extends React.Component {
@@ -14,7 +14,7 @@ class Home extends React.Component {
           return (
               
                          <div className='col-sm'>
-                              <div class='card task-card'>
+                              <div className='card task-card'>
                                    <h4 className='card-header'>My Task List</h4>
                                    <ul className='list-group list-group-flush '>
                                         <li className="list-group-item list-group-item-dark task-list-item">
