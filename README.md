@@ -7,9 +7,9 @@ backend created following tutorial:
 https://www.youtube.com/watch?v=7CqJlxBYj-M
 
 for the backend Node express server required packages are:
-express
-cors
-mongoose
+express,
+cors,
+mongoose,
 dotenv
 
 for development:
