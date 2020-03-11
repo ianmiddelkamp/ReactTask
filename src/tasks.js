@@ -1,22 +1,5 @@
 const testtasklist = [
-     {
-       "TaskId": 1,
-       "AssignedTo": "Ian",
-       "Title": "Test Task",
-       "Notes": "TRy this",
-       "DueDate": null,
-       "Status": "NEW",
-       "CreationDate": "2019-07-17 22:59:41",
-       "CompletionDate": "",
-       "Priority": 1,
-       "Location": "",
-       "isComplete": 0,
-       "Creator": "",
-       "Manager": "",
-       "Type": "Task",
-       "Completer": null,
-       "References": []
-     },
+
      {
        "TaskId": 7,
        "AssignedTo": "Ian",
@@ -51,23 +34,7 @@ const testtasklist = [
        "Manager": "Mikhail",
        "Type": "Task",
        "Completer": "Ian",
-       "References": [
-         {
-           "id": 78,
-           "TaskId": 16,
-           "Type": "Quote",
-           "Reference": "2019-R0364",
-           "Label": "2019-R0364 242 Keele St"
-         },
-         {
-           "id": 79,
-           "TaskId": 16,
-           "Type": "Contact",
-           "Reference": "5074",
-           "Label": "Diana Monahas"
-         }
-       ]
-     },
+      
      {
        "TaskId": 20,
        "AssignedTo": "Ian",
