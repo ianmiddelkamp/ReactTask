@@ -8,13 +8,13 @@ const TaskListItem = (props) => {
      const history = useHistory();
 
      const loadTask = () => {
-          history.push("/Task/" + task.TaskId)
+          history.push("/Task/" + task._id)
      }
      return (
           <li className="list-group-item list-group-item-action task-list-item" onClick={loadTask}> 
           
                     <div className='task-list-column'>
-                         <span>{task.TaskId}</span>
+                         <span>{task._id}</span>
                     </div>
                
                     <div className='task-list-column flex-grow-1' >

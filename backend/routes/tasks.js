@@ -27,7 +27,9 @@ router.route('/add').post((req, res)=>{
 
 router.route('/:id').get((req,res) => {
      Task.findById(req.params.id)
-     .then(task=>res.json(task))
+     .then(task=> {     
+          res.json(task)
+     })
      .catch(err=> res.status(400).json('Error: ' + err))
 
 })

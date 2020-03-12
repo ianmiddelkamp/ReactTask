@@ -6,10 +6,32 @@ import TaskListItem from './taskListItem'
 import taskService from '../service/taskService'
 class Home extends React.Component {
 
-     
+     constructor(){
+          super()
+          this.state = {
+               tasklist:[]
+          }
+          this.setTasks = (tasks) => {
+               this.setState({
+                    tasklist:tasks
+               })
+          }
+          taskService.getTasks().then(res => {
+               let tasks = []
+               if(res.status === 200){
+                    tasks = res.data.length ? res.data : []
+                   
+               }
+               this.setTasks(tasks);
+            
+          });
+     }
+
+
      render() {
 
-          const tasklist = taskService.getTasks();
+          let tasklist = [];
+         
           
           return (
               
@@ -36,8 +58,8 @@ class Home extends React.Component {
 
 
                                         </li>
-                                        {tasklist.map(function (task, index) {
-                                             return <TaskListItem key={task.TaskId} task={task} />
+                                        {this.state.tasklist.map(function (task, index) {
+                                             return <TaskListItem key={task._id} task={task} />
                                         })}
 
                                    </ul>
