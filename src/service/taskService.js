@@ -7,13 +7,16 @@ const tasksService =  {
           return axios.get('http://localhost:5000/tasks/')
      },
      getTask:(TaskId) =>{
-          return axios.get('http://localhost:5000/tasks/' + TaskId)
+          return axios.get(`http://localhost:5000/tasks/${TaskId}`)
      } ,
+     saveTask:(Task) => {
+          return axios.post(`http://localhost:5000/tasks/update/${Task._id}`, Task)
+     },
      getTaskStatuses:()=>{
           return ['NEW', 'STARTED', 'COMPLETED', 'CLOSED']
      },
      getTaskPriorities:()=>{
-          return ['HIGH', 'MEDIUM', 'LOW']
+          return ['LOW', 'MEDIUM','HIGH' ]
      }
         
 }

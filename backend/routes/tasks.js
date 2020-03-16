@@ -12,7 +12,7 @@ router.route('/add').post((req, res)=>{
      const Title = body.Title;
      const Notes = body.Notes;
      const DueDate = Date.parse(body.DueDate);
-     const Priority = Number(body.Priority)
+     const Priority = Priority
      const Location = body.Location;
      const Status = body.Status
 
@@ -42,13 +42,14 @@ router.route('/:id').delete((req,res) => {
 })
 
 router.route('/update/:id').post((req,res) => {
+     console.log(req.params)
      Task.findById(req.params.id)
           .then((exercise)=>{
                let body = req.body;
                exercise.Title = body.Title;
                exercise.Notes = body.Notes;
                exercise.DueDate = Date.parse(body.DueDate);
-               exercise.Priority = Number(body.Priority)
+               exercise.Priority = body.Priority
                exercise.Location = body.Location;
                exercise.Status = body.Status
                exercise.save().then(()=>res.json('Update Success'))

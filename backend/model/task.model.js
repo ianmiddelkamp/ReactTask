@@ -18,7 +18,7 @@ const taskSchema = new Schema({
           require:false,
      },
      Priority:{
-          type:Number,
+          type:String,
           require:true
      },
      Location:{
