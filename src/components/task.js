@@ -11,13 +11,14 @@ class Task extends React.Component {
      constructor(props) {
           super(props);
 
-
+          this.match = props.match
           this.task = null;
 
           this.state = {
                task: {},
                isLoading: true,
                isSaved: true,
+               formValid:false
           }
 
 
@@ -35,9 +36,13 @@ class Task extends React.Component {
           this.getReadonly = this.getReadonly.bind(this);
           this.revert = this.revert.bind(this);
           this.saveTask = this.saveTask.bind(this);
+          this.validateForm = this.validateForm.bind(this);
+          this.deleteTask = this.deleteTask.bind(this);
+     }
 
-          if (this.props.match) {
-               let match = props.match
+     componentDidMount(){
+          if (this.match) {
+               let match = this.match
                
                if (match.params.TaskId) {
                     console.log("test1" + match.params.TaskId)
@@ -68,25 +73,41 @@ class Task extends React.Component {
                     this.isNew = true;
                     let DueDate = moment();
                     DueDate.add(1, 'day');
-                    this.task = {
+                    let task = {
                          Title: "",
                          Notes: "",
                          Location: "",
-                         DueDate: DueDate.toDate()
+                         DueDate: DueDate.toDate(),
+                         Status:"NEW",
+                         Priority:"LOW"
+
                     }
                     this.setState({
-                         task: this.task,
+                         task: task,
                          isLoading: false
                     })
-                    this.taskBackup = _.clone(this.task)
+                    this.taskBackup = _.clone(task)
                }
           }else{
                console.log("test3")
           }
           //load task
-
-
+          this.validateForm();
      }
+         
+     validateForm = () => {
+          let valid = true;
+ 
+          let task = this.state.task;
+
+          valid = task.DueDate  !=null && task.DueDate!="" && task.Location != "" && task.Notes != "" && task.Title != ""
+          console.log(valid)
+          this.setState({
+               formValid: valid
+          })
+     
+     }
+     
      // console.log(match)
      onChangeInput = (event) => {
           let taskCopy = this.state.task
@@ -95,6 +116,7 @@ class Task extends React.Component {
                task: taskCopy,
                isSaved: false
           })
+          this.validateForm();
      }
 
      setDueDate = (date) => {
@@ -106,6 +128,7 @@ class Task extends React.Component {
                task: taskCopy,
                isSaved: false
           })
+          this.validateForm();
      }
      getReadonly = () => {
           if (this.state.task.Status == "CLOSED" || this.state.task.Status == "COMPLETED") {
@@ -121,18 +144,36 @@ class Task extends React.Component {
           })
      }
      saveTask = () => {
-          taskService.saveTask(this.state.task).then(res => {
-               this.task = this.state.task;
-               this.taskBackup = _.clone(this.task)
-               this.setState({
-                    isSaved: true
+          if(this.isNew){
+               taskService.addTask(this.state.task).then(res => {
+                    if (res.status === 200) {
+                         let task = res.data ? res.data : null
+                         this.props.history.replace('/Task/' + task._id)
+                    }
                })
-          })
+          }else{
+               taskService.saveTask(this.state.task).then(res => {
+                    this.task = this.state.task;
+                    this.taskBackup = _.clone(this.task)
+                    this.setState({
+                         isSaved: true
+                    })
+               })
+          }
+         
 
+     }
+     deleteTask = () => {
+          taskService.deleteTask(this.state.task._id).then(res => {
+               if (res.status === 200) {
+                 //   let task = res.data ? res.data : null
+                    this.props.history.replace('/')
+               }
+          })
      }
 
      render() {
-
+          
           if (this.state.isLoading) {
                return (
                     <div>
@@ -155,6 +196,10 @@ class Task extends React.Component {
                          timeCaption="time"
                          dateFormat="yyyy-MM-dd HH:mm:ss"
                     /></div>
+               }
+               let DeleteButton = "";
+               if(!this.isNew){
+                    DeleteButton = <button type='button' className='m-1 btn btn-danger' onClick={this.deleteTask}>Delete</button>
                }
                return (
 
@@ -249,8 +294,9 @@ class Task extends React.Component {
                                    </div>
                               </div>
                               <div className='card-footer'>
-                                   <button type='button' className='m-1 btn btn-success' disabled={this.state.isSaved} onClick={this.saveTask}>Save</button>
+                                   <button type='button' className='m-1 btn btn-success' disabled={!this.state.formValid || this.state.isSaved} onClick={this.saveTask}>Save</button>
                                    <button type='button' className='m-1 btn btn-success' disabled={this.state.isSaved} onClick={this.revert}>Undo</button>
+                                   {DeleteButton}
                               </div>
 
 

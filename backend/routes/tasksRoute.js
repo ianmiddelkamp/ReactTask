@@ -8,11 +8,12 @@ router.route('/').get((req,res) => {
 
 })
 router.route('/add').post((req, res)=>{
+ 
      let body = req.body;
      const Title = body.Title;
      const Notes = body.Notes;
      const DueDate = Date.parse(body.DueDate);
-     const Priority = Priority
+     const Priority = body.Priority
      const Location = body.Location;
      const Status = body.Status
 
@@ -20,8 +21,16 @@ router.route('/add').post((req, res)=>{
           Title, Notes, DueDate, Priority, Location, Status
      });
 
-     newTask.save().then(()=>res.json('Success'))
-     .catch(err=> res.status(400).json('Error: ' + err))
+     newTask.save().then((task) => {
+     // console.log(task)
+          res.json(task)
+     }) 
+     .catch(err=> {
+
+          console.log(err)
+          res.status(400).json('Error: ' + err)
+          
+     })
 
 })
 
